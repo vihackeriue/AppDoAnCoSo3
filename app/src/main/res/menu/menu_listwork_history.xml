@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/apply_history_menu"
+        android:title="Áp dụng Lại"
+        android:icon="@drawable/statistical_listwork_24"/>
+    <item android:id="@+id/delete_history_menu"
+        android:title="Xóa Khỏi Danh Sách"
+        android:icon="@drawable/history_listwork_24"/>
+</menu>
