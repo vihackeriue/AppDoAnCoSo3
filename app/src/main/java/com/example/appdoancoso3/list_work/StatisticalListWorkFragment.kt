@@ -17,7 +17,7 @@ import com.github.mikephil.charting.data.*
 
 class StatisticalListWorkFragment : Fragment() {
 
-    private lateinit var pieChart: PieChart
+
     private lateinit var binding: FragmentStatisticalListWorkBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
