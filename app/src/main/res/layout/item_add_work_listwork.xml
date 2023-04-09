@@ -2,6 +2,12 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_item_adddetailwork"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    android:elevation="8dp"
+
     >
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -11,8 +17,8 @@
 
        >
 
-        <EditText
-            android:id="@+id/title_work_listwork"
+        <TextView
+            android:id="@+id/tv_title_work_listwork"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -49,7 +55,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/count_hour"
+                    android:id="@+id/tv_count_hour"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:background="@drawable/round_back_black10_10"
@@ -68,8 +74,8 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/count_minute"
-                    android:layout_width="25dp"
+                    android:id="@+id/tv_count_minute"
+                    android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:background="@drawable/round_back_black10_10"
                     android:text="00"
@@ -86,9 +92,9 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/count_second"
+                    android:id="@+id/tv_count_second"
                     android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_height="match_parent"
                     android:background="@drawable/round_back_black10_10"
                     android:text="00"
                     android:textColor="@color/red"
@@ -98,18 +104,19 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/choose_time"
                 android:layout_width="45dp"
                 android:layout_height="match_parent"
                 android:src="@drawable/timer_64" />
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/note_work_listwork"
+        <TextView
+            android:id="@+id/tv_content_work_listwork"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="18dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@null"
@@ -118,6 +125,7 @@
             android:hint="Ghi Chú"
             android:inputType="textPersonName"
             android:textSize="22sp"
+            android:layout_marginBottom="8dp"
             />
     </LinearLayout>
 

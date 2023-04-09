@@ -11,4 +11,15 @@
     <color name="primary">#1E1B1C</color>
     <color name="secondary">#C42556</color>
     <color name="red">#E10000</color>
+
+    <color name="WorkColor1">#FF6263</color>
+    <color name="WorkColor2">#FF2263</color>
+    <color name="WorkColor3">#FF3263</color>
+    <color name="WorkColor4">#FF9233</color>
+    <color name="WorkColor5">#FF6233</color>
+    <color name="WorkColor6">#FF6123</color>
+
+    <color name="AddWorkColor1">#E1BEE7</color>
+    <color name="AddWorkColor2">#E1BEE7</color>
+    <color name="AddWorkColor3">#C5CAE9</color>
 </resources>

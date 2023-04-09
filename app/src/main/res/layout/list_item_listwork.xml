@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/title"
+                android:id="@+id/title_listwork"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -28,7 +28,7 @@
                 />
         </RelativeLayout>
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/content_listwork"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -37,7 +37,7 @@
             android:textColor="@color/black"
             />
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/date_listwork"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
