@@ -7,9 +7,12 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.example.appdoancoso3.database.MWorkDBHelper.Companion.TABLE_NAME2
+import com.example.appdoancoso3.R
+import com.example.appdoancoso3.list_work.HomeListWorkFragment
 import com.example.appdoancoso3.model.DetailWorkModel
 import com.example.appdoancoso3.model.WorkModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MWorkDBHelper(context: Context): SQLiteOpenHelper(context, "ManageWorkDB1", null, DATABASE_VERSION){
@@ -47,7 +50,7 @@ class MWorkDBHelper(context: Context): SQLiteOpenHelper(context, "ManageWorkDB1"
                 "    ID          INTEGER PRIMARY KEY AUTOINCREMENT\n" +
                 "                        NOT NULL,\n" +
                 "    Title       TEXT    NOT NULL,\n" +
-                "    Date_create DATE    NOT NULL,\n" +
+                "    Date_created TEXT    NOT NULL,\n" +
                 "    IDUser      INTEGER REFERENCES users (ID) ON DELETE CASCADE\n" +
                 ");")
         val CREATE_TABLE2 = ("CREATE TABLE "+TABLE_NAME2+" (\n" +
@@ -87,7 +90,11 @@ class MWorkDBHelper(context: Context): SQLiteOpenHelper(context, "ManageWorkDB1"
         }
         onCreate(p0)
     }
-    fun insertDataWorkDetail(title: String, content: String,date: String ,hours: String,minutes: String, status: Int, idworks: Int): Boolean {
+    fun insertDataWorkDetail(
+        title: String, content: String,
+        date: String?,
+        hours: String,
+        minutes: String, status: Int, idworks: Int): Boolean {
         val values = ContentValues()
         values.put(COLUMN_TITLE, title)
         values.put(COLUMN_CONTENT, content)
@@ -98,18 +105,18 @@ class MWorkDBHelper(context: Context): SQLiteOpenHelper(context, "ManageWorkDB1"
         values.put(COLUMN_IDWORKS, idworks)
         val db = this.writableDatabase
         val result = db.insert(TABLE_NAME2, null, values)
-        db.close()
+//        db.close()
         return result > -1
     }
 
     fun insertDataWorks(title: String,date: String, iduser: Int): Boolean {
         val values = ContentValues()
         values.put("Title", title)
-        values.put("Day_created", date)
-        values.put("IDUser", date)
+        values.put("Date_created", date)
+        values.put("IDUser", iduser)
         val db = this.writableDatabase
         val result = db.insert(TABLE_NAME1, null, values)
-        db.close()
+//        db.close()
         return result > -1
     }
     fun createAccount(FullName: String,Username: String, Password: String): Boolean {
@@ -119,7 +126,7 @@ class MWorkDBHelper(context: Context): SQLiteOpenHelper(context, "ManageWorkDB1"
         values.put("Password", Password)
         val db = this.writableDatabase
         val result = db.insert(TABLE_NAME, null, values)
-        db.close()
+//        db.close()
         return result > -1
     }
 
@@ -129,26 +136,35 @@ class MWorkDBHelper(context: Context): SQLiteOpenHelper(context, "ManageWorkDB1"
     fun getDataWorkDetail(): ArrayList<DetailWorkModel> {
         val data = ArrayList<DetailWorkModel>()
         val db = this.readableDatabase
-        val cursor: Cursor = db.rawQuery("SELECT * FROM DetailWorks", null)
+        val dateCreated = getDateNow()
+        val idworks = getIDWorksNow()
+        if(idworks != -1){
+            Log.wtf("aaa", idworks.toString())
+            Log.wtf("aaa", dateCreated)
 
-        if (cursor.moveToFirst()) {
-            Log.wtf("aaa", "1")
-            do {
-                val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
-                val title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
-                val content = cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT))
-                val date_created = cursor.getString(cursor.getColumnIndex(COLUMN_DATE_CREATED))
-                val time_hours = cursor.getString(cursor.getColumnIndex(COLUMN_TIME_HOURS))
-                val time_minutes = cursor.getString(cursor.getColumnIndex(COLUMN_TIME_MINUTES))
-                val status = cursor.getInt(cursor.getColumnIndex(COLUMN_STATUS))
-                val idworks = cursor.getInt(cursor.getColumnIndex(COLUMN_IDWORKS))
+            val cursor: Cursor = db.rawQuery("SELECT * FROM DetailWorks WHERE  IDWorks = $idworks", null)
+
+            if (cursor.moveToFirst()) {
+                Log.wtf("aaa", "1")
+                do {
+                    val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+                    val title = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
+                    val content = cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT))
+                    val date_created = cursor.getString(cursor.getColumnIndex(COLUMN_DATE_CREATED))
+                    val time_hours = cursor.getString(cursor.getColumnIndex(COLUMN_TIME_HOURS))
+                    val time_minutes = cursor.getString(cursor.getColumnIndex(COLUMN_TIME_MINUTES))
+                    val status = cursor.getInt(cursor.getColumnIndex(COLUMN_STATUS))
+                    val idworks = cursor.getInt(cursor.getColumnIndex(COLUMN_IDWORKS))
 
 
-                data.add(DetailWorkModel(id, title,date_created ,time_hours,time_minutes,content,status,idworks))
-            } while (cursor.moveToNext())
+                    data.add(DetailWorkModel(id, title,date_created ,time_hours,time_minutes,content,status,idworks))
+                } while (cursor.moveToNext())
+            }
+            cursor.close()
+//            db.close()
         }
-        cursor.close()
-        db.close()
+
+
         return data
     }
 
@@ -159,16 +175,75 @@ class MWorkDBHelper(context: Context): SQLiteOpenHelper(context, "ManageWorkDB1"
         val cursor: Cursor = db.rawQuery("SELECT * FROM Works", null)
 
         if (cursor.moveToFirst()) {
-            Log.wtf("aaa", "1")
+
             do {
                 val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
                 val title = cursor.getString(cursor.getColumnIndex("Title"))
-                val date_created = cursor.getString(cursor.getColumnIndex("day_created"))
+                val date_created = cursor.getString(cursor.getColumnIndex("Date_created"))
                 data.add(WorkModel(id,title,date_created, 0))
             } while (cursor.moveToNext())
         }
         cursor.close()
-        db.close()
+//        db.close()
         return data
+    }
+
+    @SuppressLint("Range")
+    fun getIDWorksNow(): Int {
+        val db = this.readableDatabase
+        val date_now = getDateNow()
+        val cursor: Cursor = db.rawQuery("SELECT ID FROM Works WHERE Date_created = '$date_now'", null)
+        var id: Int = -1
+        if (cursor.moveToFirst()) {
+            id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+        }
+        cursor.close()
+//        db.close()
+        return id
+    }
+    @SuppressLint("Range")
+    fun getDataWorkNow(): ArrayList<WorkModel> {
+        val data = ArrayList<WorkModel>()
+        val db = this.readableDatabase
+        val dateCreated = getDateNow()
+        val cursor: Cursor = db.rawQuery("SELECT * FROM Works WHERE Date_created = '$dateCreated' ", null)
+
+        if (cursor.moveToFirst()) {
+            Log.wtf("aaa", "hay")
+            do {
+                val id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID))
+                val title = cursor.getString(cursor.getColumnIndex("Title"))
+                val date_created = cursor.getString(cursor.getColumnIndex("Date_created"))
+                data.add(WorkModel(id,title,date_created, 0))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+//        db.close()
+        return data
+    }
+// delete
+    fun deleteData(id:Int, table: String): Int{
+    val db = this.writableDatabase
+
+// Điều kiện để xóa dòng dữ liệu
+    val whereClause = "ID = ?"
+    val whereArgs = arrayOf(id.toString()) // giá trị của id
+
+// Thực hiện xóa dòng dữ liệu
+    val deletedRows = db.delete(table, whereClause,whereArgs )
+
+        return deletedRows
+    }
+
+
+    fun getDateNow(): String {
+        val calendar: Calendar = Calendar.getInstance()
+
+        val year = calendar[Calendar.YEAR]
+        val month = calendar[Calendar.MONTH] + 1 // Vì tháng bắt đầu từ 0 nên phải cộng thêm 1
+
+        val day = calendar[Calendar.DAY_OF_MONTH]
+        val currentDate = "$day/$month/$year"
+        return currentDate
     }
 }

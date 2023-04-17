@@ -5,68 +5,48 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="8dp"
-
+    android:background="@color/white"
     app:cardCornerRadius="8dp"
     android:elevation="8dp"
-    android:background="@color/white"
+
     >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="16dp"
         >
-        <GridLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
+            android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/title_listwork"
-                android:layout_width="wrap_content"
+                android:id="@+id/title_notework"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:text="Tiêu đề"
-                android:textSize="26sp"
+                android:textSize="18sp"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 />
-            <TextView
-                android:id="@+id/status_listwork"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:text="Chưa hoàn thành"
-                android:textSize="16dp"
-                android:textColor="#1C0451"
-                android:layout_gravity="end|top"
-                />
-
-        </GridLayout>
-
-
+        </RelativeLayout>
         <TextView
-            android:id="@+id/content_listwork"
+            android:id="@+id/content_notework"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:text="Nội dung"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:textColor="@color/black"
             />
         <TextView
-            android:id="@+id/date_listwork"
+            android:id="@+id/date_notework"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:text="00:00"
-            android:textSize="18sp"
+            android:text="ngày"
+            android:textSize="14sp"
             android:textColor="@color/black"
-            android:gravity="end"
-            android:textStyle="bold"
-            />
 
+            />
 
     </LinearLayout>
 

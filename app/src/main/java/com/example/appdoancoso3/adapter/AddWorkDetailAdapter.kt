@@ -19,6 +19,8 @@ class AddWorkDetailAdapter(private var list: ArrayList<DetailWorkModel>, var add
 
     interface  AddDetailWorkInterface{
         fun onChooseItem(position: Int)
+
+
     }
 
 
@@ -41,9 +43,7 @@ class AddWorkDetailAdapter(private var list: ArrayList<DetailWorkModel>, var add
                 binding.tvCountHour.text = this.time_hours
                 binding.tvCountMinute.text = this.time_minute
                 binding.tvContentWorkListwork.text = this.content
-                holder.binding.chooseTime.setOnClickListener {
-                    addDetailWorkInterface.onChooseItem(position)
-                }
+
             }
             holder.binding.cardItemAdddetailwork.setCardBackgroundColor(holder.itemView.resources.getColor(randomColor(), null))
         }

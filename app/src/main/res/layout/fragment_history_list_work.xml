@@ -4,35 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".list_work.HistoryListWorkFragment">
+    tools:context=".list_work.HistoryListWorkFragment"
+    android:background="@color/background"
+    >
 
 
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        tools:ignore="MissingConstraints">
+        android:layout_margin="8dp"
+        android:background="@drawable/color_card_detailwork"
+        android:elevation="8dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:layout_width="39dp"
-            android:layout_height="36dp"
-            android:src="@drawable/history_listwork_24"
-
-            />
-
+            android:layout_width="wrap_content"
+            android:layout_height="90dp"
+            android:background="@drawable/color_card_detailwork"
+            android:scaleType="centerCrop"
+            android:src="@drawable/backgr_card" />
         <TextView
+            android:id="@+id/title_cardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_margin="8dp"
             android:text="Danh Sách Công Việc Thời Gian Qua"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:textStyle="bold|italic" />
-    </LinearLayout>
-
+            android:textColor="@color/white"
+            android:textSize="24sp" />
+    </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcv_history_work"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"

@@ -1,23 +1,28 @@
 package com.example.appdoancoso3.adapter
 
+import android.provider.ContactsContract
+import android.text.method.TextKeyListener.clear
 import android.view.LayoutInflater
+import android.view.View
 
 import android.view.ViewGroup
+import android.widget.AdapterView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.appdoancoso3.R
 import com.example.appdoancoso3.databinding.ListItemListworkBinding
 import com.example.appdoancoso3.model.DetailWorkModel
+import com.example.appdoancoso3.model.WorkDetailViewModel
+import com.example.appdoancoso3.model.WorkModel
 import kotlin.random.Random
 
 
-class HomeListWorkAdapter(private val list: ArrayList<DetailWorkModel>): RecyclerView.Adapter<HomeListWorkAdapter.ViewHolder>(){
+class HomeListWorkAdapter(private val list: ArrayList<DetailWorkModel>, val addWorkClickListener:AddWorkClickListener ): RecyclerView.Adapter<HomeListWorkAdapter.ViewHolder>(){
 
-    lateinit var mListener: onItemClickListener
-    interface onItemClickListener{
+
+    interface AddWorkClickListener : AdapterView.OnItemLongClickListener {
         fun onItemClick(position: Int)
-    }
-    fun setOnItemClickListener(clickListener: onItemClickListener){
-        mListener = clickListener
+        fun onItemLongClick( position: Int,cardView: CardView)
     }
 
     inner class ViewHolder( val binding: ListItemListworkBinding) : RecyclerView.ViewHolder(binding.root)
@@ -39,21 +44,39 @@ class HomeListWorkAdapter(private val list: ArrayList<DetailWorkModel>): Recycle
                 binding.dateListwork.text =this.date_created.toString()
             }
             holder.binding.cardLayout.setCardBackgroundColor(holder.itemView.resources.getColor(randomColor(), null))
+            holder.binding.cardLayout.setOnClickListener {
+                    addWorkClickListener.onItemClick(position)
+            }
+            holder.binding.cardLayout.setOnLongClickListener{
+                addWorkClickListener.onItemLongClick(position, binding.cardLayout)
+                true
+            }
         }
+
     }
 
     fun randomColor(): Int {
         val  list = ArrayList<Int>()
         list.add(R.color.WorkColor1)
-        list.add(R.color.WorkColor2)
-        list.add(R.color.WorkColor3)
-        list.add(R.color.WorkColor4)
-        list.add(R.color.WorkColor5)
-        list.add(R.color.WorkColor6)
+
         val seed = System.currentTimeMillis().toInt()
         val randomIndext = Random(seed).nextInt(list.size)
         return list[randomIndext]
     }
+//    fun updateList(newList : List<DetailWorkModel>){
+//        list.clear()
+//        for (item in newList){
+//            list.add(DetailWorkModel(item.ID, item.title, item.date_created, item.time_hours, item.time_minute,item.content,item.status, item.IDWorks))
+//            notifyDataSetChanged()
+//        }
+//
+//
+////        NotesList.clear()
+////        NotesList.addAll(fullList)
+//
+//
+//
+//    }
 
 
 }

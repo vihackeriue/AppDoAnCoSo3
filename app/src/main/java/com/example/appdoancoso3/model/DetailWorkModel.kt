@@ -1,5 +1,8 @@
 package com.example.appdoancoso3.model
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import java.util.*
 
 class DetailWorkModel (
@@ -13,3 +16,16 @@ class DetailWorkModel (
     var status: Int?,
     var IDWorks: Int?
         )
+
+
+class WorkDetailViewModel : ViewModel() {
+    private val _workLiveData = MutableLiveData<List<DetailWorkModel>>()
+
+    fun setMyLiveData(list: List<DetailWorkModel>) {
+        _workLiveData.value = list
+    }
+
+    fun getMyLiveData(): LiveData<List<DetailWorkModel>> {
+        return _workLiveData
+    }
+}

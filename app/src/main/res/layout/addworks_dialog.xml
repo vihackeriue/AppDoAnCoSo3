@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+
+    <EditText
+        android:id="@+id/name_Work_dialogAddWork"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="Tên công việc"
+        android:inputType="textPersonName" />
+    <TextView
+        android:id="@+id/date_Work_dialogAddWork"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="21/2/2003"
+        android:inputType="textPersonName"
+        android:textAlignment="textEnd"
+        android:layout_marginRight="8dp"
+        />
+
+    <Button
+        android:id="@+id/add_work_dialogAddWork"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="Tạo mới" />
+
+
+</LinearLayout>
